@@ -61,7 +61,7 @@ namespace MutitleDBDataBatchUpdate
             sw.Start();
             _batchRepository.BatchAdd(batchItems);
             sw.Stop();
-            Console.WriteLine($"AddBatchItemByNormalAdd  {sw.ElapsedMilliseconds}ms");
+            Console.WriteLine($"AddBatchItemByBatchAdd  {sw.ElapsedMilliseconds}ms");
         }
     }
 }
