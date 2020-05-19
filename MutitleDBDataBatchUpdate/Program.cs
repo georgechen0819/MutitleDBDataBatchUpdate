@@ -17,6 +17,7 @@ namespace MutitleDBDataBatchUpdate
     {
         private static IContainer CompositionRoot()
         {
+            // George 05/19
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
             builder.RegisterType<TestDbConnection>().As<ITestDbConnection>();
