@@ -23,7 +23,7 @@ namespace MutitleDBDataBatchUpdate
         public void Run()
         {
             AddBatchItemByNormalAdd(1 , insertRecordQty);
-            AddBatchItemByBatchAdd(2, insertRecordQty);
+            AddBatchItemByBatchAdd(2, insertRecordQty); 
         }
 
         public void AddBatchItemByNormalAdd(int batchKey , int insertItemQty)
