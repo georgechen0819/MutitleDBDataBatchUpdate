@@ -13,7 +13,7 @@ namespace MutitleDBDataBatchUpdate
     {
         private IBatchRepository _batchRepository;
 
-        private int insertRecordQty = 100;
+        private int insertRecordQty = 10000;
 
         public Application(IBatchRepository iBatchRepository)
         {
@@ -23,7 +23,7 @@ namespace MutitleDBDataBatchUpdate
         public void Run()
         {
             AddBatchItemByNormalAdd(1 , insertRecordQty);
-            AddBatchItemByBatchAdd(2, insertRecordQty); 
+            AddBatchItemByBatchAdd(2, insertRecordQty);
         }
 
         public void AddBatchItemByNormalAdd(int batchKey , int insertItemQty)
@@ -63,5 +63,6 @@ namespace MutitleDBDataBatchUpdate
             sw.Stop();
             Console.WriteLine($"AddBatchItemByBatchAdd  {sw.ElapsedMilliseconds}ms");
         }
+
     }
 }

@@ -8,7 +8,6 @@ namespace MutitleDBDataBatchUpdate.Models.Repos
     {
         int Add(BatchIten item);
         int BatchAdd(List<BatchIten> items);
-        void Dispose();
         IQueryable<BatchIten> GetBatchItens();
     }
 }

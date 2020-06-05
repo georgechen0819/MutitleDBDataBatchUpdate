@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace MutitleDBDataBatchUpdate.Models.Entitis
 {
     public class TestDbConnection : ITestDbConnection
     {
+        private bool _disposed;
         private TestDBEntities _db;
 
-        public TestDbConnection()
+        public TestDbConnection(TestDBEntities testDBEntities)
         {
-            _db = new TestDBEntities();
+            _db = testDBEntities;
         }
 
+
         public IQueryable<BatchIten> QueryableBatchItem => _db.BatchIten;
+
 
         public void Modified<T>(T model, EntityState state) where T : class
         {
@@ -30,20 +34,31 @@ namespace MutitleDBDataBatchUpdate.Models.Entitis
         {
             return _db.SaveChanges();
         }
-        public void Dispose(bool isReNewDbConn)
-        {
-            _db.Dispose();
 
-            if (isReNewDbConn)
-            {
-                ReNewDbConn();
-            }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            ReNewConnection();
         }
 
-        // 錯誤示範，這裡違反了 DI/IOC 原則
-        public void ReNewDbConn()
+        private void ReNewConnection()
         {
-            _db = new TestDBEntities();
+            // 重新建立實體物件
+            _db = Program.container.Resolve<TestDBEntities>();
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _db.Dispose();
+                }
+            }
+
+            _disposed = true;
         }
     }
 }

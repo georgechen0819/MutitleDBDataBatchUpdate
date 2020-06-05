@@ -13,21 +13,23 @@ using static System.Net.Mime.MediaTypeNames;
 namespace MutitleDBDataBatchUpdate
 {
     [ExcludeFromCodeCoverage]
-    static class Program
+    public static class Program
     {
+        public static IContainer container = null;
         private static IContainer CompositionRoot()
         {
-            // George 05/19
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
             builder.RegisterType<TestDbConnection>().As<ITestDbConnection>();
             builder.RegisterType<BatchRepository>().As<IBatchRepository>();
+            builder.Register(p => new TestDBEntities());
             return builder.Build();
         }
 
         static void Main(string[] args)
         {
-            CompositionRoot().Resolve<Application>().Run();
+            container = CompositionRoot();
+            container.Resolve<Application>().Run();
         }
 
         

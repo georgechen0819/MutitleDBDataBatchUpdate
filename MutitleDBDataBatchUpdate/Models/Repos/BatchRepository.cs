@@ -1,4 +1,5 @@
-﻿using MutitleDBDataBatchUpdate.Models.Entitis;
+﻿using Autofac.Util;
+using MutitleDBDataBatchUpdate.Models.Entitis;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MutitleDBDataBatchUpdate.Models.Repos
 {
-    public class BatchRepository : IBatchRepository, IDisposable
+    public class BatchRepository : IBatchRepository
     {
         private ITestDbConnection _testDbConnection;
 
@@ -41,17 +42,10 @@ namespace MutitleDBDataBatchUpdate.Models.Repos
                 }
 
                 addRecrod += _testDbConnection.SaveChange();
-                Dispose();
+                _testDbConnection.Dispose();
             }
 
             return addRecrod;
         }
-
-        public void Dispose()
-        {
-            _testDbConnection.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }
